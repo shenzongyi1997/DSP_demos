@@ -1,0 +1,24 @@
+function [delay] = delay_mostcor(s1,s2,distance)
+%DELAY_MOSTCOR 输入两个等长列数组和一个步长,返回一个数
+%   寻找一个delay来让两个数组尽可能最大化相似程度，返回的有可能是负数，最好绝对值小一点.这个Delay应该作用于第二个信号上
+delay = 0;
+corr_distance_map = zeros(2,fix(length(s1)/distance));
+len = length(s1);
+for i = 1:fix(length(s1)/distance) - 1
+   temp_delay = delay + distance * i;
+    %-delay
+   corr_distance_map(2 * i - 1,1) = -temp_delay;
+   t1 = s1(1:len - temp_delay);
+   t2 = s2(temp_delay + 1:len);
+   corr_distance_map(2 * i - 1,2) = corr(t1,t2);
+   if
+   %delay
+   corr_distance_map(2 * i,1) = temp_delay;
+   t1 = s1(temp_delay + 1:len);
+   t2 = s2(1:len - temp_delay);
+   corr_distance_map(2 * i,2) = corr(t1,t2);
+end
+[v index] = max(corr_distance_map(:,2));
+delay = corr_distance_map(index,1);
+end
+
