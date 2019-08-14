@@ -1,0 +1,12 @@
+x = linspace(-1,1,100);
+y = zeros(100,1);
+N = 10
+pi = 3.1415926
+temp = zeros(100,1)
+for i = 1:N
+    temp = sin((2.*i + 1).*pi.*x)
+    y = y + temp
+end
+
+plot(x,y)
+title(["N" num2str(N)])
